@@ -72,6 +72,13 @@ p {
 }
 a {
   color: rgba(92, 92, 92, 1);
+	text-decoration: none;
+}
+.link {
+	text-decoration: underline;
+}
+strong {
+	font-weight: bold;
 }
 nav {
   background-color: rgba(67, 250, 200, .2);
@@ -131,30 +138,33 @@ li {
 #chart_div {
   width: 80% vw;
 }
-#sidebar {
-  position:absolute;
-  top:5em; bottom:0; right:2em;
-  background-color: rgba(255,255,255,.4);
-  line-height: 2em;
-}
-.city {
-  font-weight: bold;
-  border-bottom: 3px solid Gray;
-}
 .wrapper {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -142px;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -142px;
 }
 footer {
-   position:fixed;
-   left:0px;
-   bottom:0px;
-   height:auto;
-   padding: 2em;
-   width:100%;
-}
-#dateSlider {
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  height:auto;
+  padding: 0 2em 2em 0;
+  width:100%;
   background-color: rgba(255,255,255,.4)
+}
+#expand {
+	margin: 0 25%;
+	border-top: 3px solid #9CC5BA;
+	line-height: 1.25em;
+}
+.content {
+	display: none;
+}
+.city {
+	font-weight: bold;
+	font-size: 1.25em;
+	color: #9CC5BA;
+	padding: 1em 0;
+	text-decoration: none;
 }

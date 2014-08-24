@@ -3,17 +3,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
     <title>Download Density</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
-    <link rel="stylesheet" id="themeCSS" href="css/classic.css">
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
     </script>
-    <!-- // <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-	  //  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-	  //  <script src="lib/jquery.mousewheel.min.js"></script>
-    //
-	  //  <script src="jQAllRangeSliders-min.js"></script>
-	  //  <script src="dateSliderDemo.js"></script> -->
+    <script type="text/javascript" src="js/simple-expandmin.js"></script>
 
     <script type='text/javascript'>
      google.load('visualization', '1', {'packages': ['geochart']});
@@ -67,22 +63,28 @@
         </ul>
       </nav>
       <div id="chart_div"></div>
-      <div id="sidebar">
-          <h3 class="city">Ithaca, NY</h3>
-          <p>Most popular file... // 4005 dl</p>
-          <p>Next most popular... // 3980 dl</p>
-          <p>Next one after that... // 3202 dl</p>
-          <p>And so on and on... // 2820 dl</p>
-          <p>Continues in order... // 2004 dl</p>
-          <p><a href="#">View More</a></p>
-      </div>
       <div class="push"></div>
-        <footer id="dateSlider">
-          <div id="slider"></div>
-          <!-- // <script>
-          // $("#slider").dateRangeSlider();
-          // </script> -->
+        <footer>
+          <div id="expand">
+            <a class="expander" href="#">
+            <h3 class="city">Ithaca, NY</h3>
+            </a>
+            <div class="content">
+            <p>Most popular file... <strong>4005 dl</strong></p>
+            <p>Next most popular... <strong>3980 dl</strong></p>
+            <p>Next one after that... <strong>3202 dl</strong></p>
+            <p>And so on and on... <strong>2820 dl</strong></p>
+            <p>Continues in order... <strong>2004 dl</strong></p>
+            <p class="link"><a href="#">View More</a></p>
+            </div>
+          </div>
+          <div id="slider">
+            <p>timeline goes here</p>
+          </div>
         </footer>
     </div>
+    <script>
+    $('.expander').simpleexpand();
+    </script>
   </body>
 </html>
