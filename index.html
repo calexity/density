@@ -8,12 +8,12 @@
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
     </script>
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-	   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-	   <script src="lib/jquery.mousewheel.min.js"></script>
-
-	   <script src="jQAllRangeSliders-min.js"></script>
-	   <script src="dateSliderDemo.js"></script>
+    <!-- // <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	  //  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+	  //  <script src="lib/jquery.mousewheel.min.js"></script>
+    //
+	  //  <script src="jQAllRangeSliders-min.js"></script>
+	  //  <script src="dateSliderDemo.js"></script> -->
 
     <script type='text/javascript'>
      google.load('visualization', '1', {'packages': ['geochart']});
@@ -38,7 +38,9 @@
       options = {
         region: 'US',
         displayMode: 'markers',
-        colorAxis: {colors: ['#FFC7B2', '#FE6127'] }
+        legend: 'none',
+        colorAxis: {colors: ['#FFC7B2', '#FE6127'] },
+        tooltip: {textStyle:{color: '#5C5C5C', fontName: 'Helvetica Neue', fontSize: '14'}}
       };
 
       chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
@@ -55,10 +57,15 @@
   <body>
     <div class="wrapper">
       <nav>
-        <div id="left">Download Density</div>
-        <div id="right">
-          <img id="search" src="images/search.png" alt="search" >
-          Search</div>
+        <ul>
+        <li id="left">Download Density</li>
+        <li id="right">
+          <form id="searchbox">
+          <input type="text" name="search" class="search" placeholder="Search by keyword">
+          <input type='submit' value='Search' />
+          </form>
+        </li>
+        </ul>
       </nav>
       <div id="chart_div"></div>
       <div id="sidebar">
@@ -73,9 +80,9 @@
       <div class="push"></div>
         <footer id="dateSlider">
           <div id="slider"></div>
-          <script>
-          $("#slider").dateRangeSlider();
-          </script>
+          <!-- // <script>
+          // $("#slider").dateRangeSlider();
+          // </script> -->
         </footer>
     </div>
   </body>
