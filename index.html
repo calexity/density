@@ -1,30 +1,38 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
     <title>Download Density</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
+    <link rel="stylesheet" id="themeCSS" href="css/classic.css">
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
     </script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+	   <script src="lib/jquery.mousewheel.min.js"></script>
+
+	   <script src="jQAllRangeSliders-min.js"></script>
+	   <script src="dateSliderDemo.js"></script>
+
     <script type='text/javascript'>
      google.load('visualization', '1', {'packages': ['geochart']});
      google.setOnLoadCallback(drawMarkersMap);
 
       function drawMarkersMap() {
       data = google.visualization.arrayToDataTable([
-        ['City',   'Population', 'Area'],
-        ['San Francisco',      2761477,    1285.31],
-        ['Los Angeles',     1324110,    181.76],
-        ['Atlanta',    959574,     117.27],
-        ['Studio City',     907563,     130.17],
-        ['Walnut Creek',   655875,     158.9],
-        ['Burlingame',     607906,     243.60],
-        ['Mountain View',   380181,     140.7],
-        ['Ithaca',  371282,     102.41],
-        ['Evanston', 67370,      213.44],
-        ['Indio',     52192,      43.43],
-        ['Modesto',  38262,      11]
+        ['City',   'Downloads', 'Date'],
+        ['San Francisco',      2761477, 2014-01],
+        ['Los Angeles',     1324110, 2014-02],
+        ['Atlanta',    959574, 2014-01],
+        ['Studio City',     907563, 2014-01],
+        ['Walnut Creek',   655875, 2014-01],
+        ['Burlingame',     607906, 2014-03],
+        ['Mountain View',   380181, 2014-01],
+        ['Ithaca',  371282, 2014-03],
+        ['Evanston', 67370, 2014-12],
+        ['Indio',     52192, 2014-12],
+        ['Modesto',  38262, 2014-02]
       ]);
 
       options = {
@@ -41,6 +49,7 @@
       chart.draw(data, options);
       });
     });
+
     </script>
   </head>
   <body>
@@ -53,10 +62,12 @@
       </nav>
       <div id="chart_div"></div>
       <div class="push"></div>
-        <footer>
-          <div id="slider">timeline</div>
+        <footer id="dateSlider">
+          <div id="slider"></div>
+          <script>
+          $("#slider").dateRangeSlider();
+          </script>
         </footer>
     </div>
   </body>
-  <script type="text/javascript"></script>
 </html>

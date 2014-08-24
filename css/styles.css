@@ -53,11 +53,9 @@ footer {
    position:fixed;
    left:0px;
    bottom:0px;
-   height:20px;
-   padding: .5em;
+   height:auto;
+   padding: 2em;
    background: #ffffff;
    width:100%;
-}
-#timeline {
-  padding: .5em;
+   display: inline-block;
 }
