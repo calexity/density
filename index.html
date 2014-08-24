@@ -1,0 +1,62 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Download Density</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+    </script>
+    <script type='text/javascript'>
+     google.load('visualization', '1', {'packages': ['geochart']});
+     google.setOnLoadCallback(drawMarkersMap);
+
+      function drawMarkersMap() {
+      data = google.visualization.arrayToDataTable([
+        ['City',   'Population', 'Area'],
+        ['San Francisco',      2761477,    1285.31],
+        ['Los Angeles',     1324110,    181.76],
+        ['Atlanta',    959574,     117.27],
+        ['Studio City',     907563,     130.17],
+        ['Walnut Creek',   655875,     158.9],
+        ['Burlingame',     607906,     243.60],
+        ['Mountain View',   380181,     140.7],
+        ['Ithaca',  371282,     102.41],
+        ['Evanston', 67370,      213.44],
+        ['Indio',     52192,      43.43],
+        ['Modesto',  38262,      11]
+      ]);
+
+      options = {
+        region: 'US',
+        displayMode: 'markers',
+        colorAxis: {colors: ['green', 'blue']}
+      };
+
+      chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    };
+    $(document).ready (function(){
+      $( window ).resize(function(){
+      chart.draw(data, options);
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <nav>
+        <ul>
+          <li id="title">Download Density</li>
+          <li id="search">Search</li>
+        </ul>
+      </nav>
+      <div id="chart_div"></div>
+      <div class="push"></div>
+        <footer>
+          <div id="slider">timeline</div>
+        </footer>
+    </div>
+  </body>
+  <script type="text/javascript"></script>
+</html>
