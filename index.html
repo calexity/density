@@ -38,7 +38,7 @@
       options = {
         region: 'US',
         displayMode: 'markers',
-        colorAxis: {colors: ['green', 'blue']}
+        colorAxis: {colors: ['#FFC7B2', '#FE6127'] }
       };
 
       chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
@@ -55,12 +55,21 @@
   <body>
     <div class="wrapper">
       <nav>
-        <ul>
-          <li id="title">Download Density</li>
-          <li id="search">Search</li>
-        </ul>
+        <div id="left">Download Density</div>
+        <div id="right">
+          <img id="search" src="images/search.png" alt="search" >
+          Search</div>
       </nav>
       <div id="chart_div"></div>
+      <div id="sidebar">
+          <h3 class="city">Ithaca, NY</h3>
+          <p>Most popular file... // 4005 dl</p>
+          <p>Next most popular... // 3980 dl</p>
+          <p>Next one after that... // 3202 dl</p>
+          <p>And so on and on... // 2820 dl</p>
+          <p>Continues in order... // 2004 dl</p>
+          <p><a href="#">View More</a></p>
+      </div>
       <div class="push"></div>
         <footer id="dateSlider">
           <div id="slider"></div>
