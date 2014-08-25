@@ -1,90 +1,145 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
     <title>Download Density</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
     </script>
-    <script type="text/javascript" src="js/simple-expandmin.js"></script>
-
     <script type='text/javascript'>
-     google.load('visualization', '1', {'packages': ['geochart']});
-     google.setOnLoadCallback(drawMarkersMap);
+	google.load('visualization', '1', {packages: ['controls']});
+	google.setOnLoadCallback(drawChart);
 
-      function drawMarkersMap() {
-      data = google.visualization.arrayToDataTable([
-        ['City',   'Downloads', 'Date'],
-        ['San Francisco',      2761477, 2014-01],
-        ['Los Angeles',     1324110, 2014-02],
-        ['Atlanta',    959574, 2014-01],
-        ['Studio City',     907563, 2014-01],
-        ['Walnut Creek',   655875, 2014-01],
-        ['Burlingame',     607906, 2014-03],
-        ['Mountain View',   380181, 2014-01],
-        ['Ithaca',  371282, 2014-03],
-        ['Evanston', 67370, 2014-12],
-        ['Indio',     52192, 2014-12],
-        ['Modesto',  38262, 2014-02]
-      ]);
+	function drawChart() {
+        geodata = {% autoescape off %}{{ data }}{% endautoescape %}
+	    geodatatable = new google.visualization.DataTable(geodata);
+		
+	    data = new google.visualization.DataTable();
+	    data.addColumn('date', 'Month');
+	    data.addColumn('string', 'State');
+	    data.addColumn('number', 'NumDownloads');
+	    data.addColumn('number', 'NumIPs');
+		for (var i = 0; i < geodatatable.getNumberOfRows() - 1; i++) {
+		    data.addRow([
+		   	    new Date(geodatatable.getValue(i, 0)),
+			    geodatatable.getValue(i, 1),
+			    geodatatable.getValue(i, 2),
+			    geodatatable.getValue(i, 3),
+		    ]);
+	  	}
 
-      options = {
-        region: 'US',
-        displayMode: 'markers',
-        legend: 'none',
-        colorAxis: {colors: ['#FFC7B2', '#FE6127'] },
-        tooltip: {textStyle:{color: '#5C5C5C', fontName: 'Helvetica Neue', fontSize: '14'}}
-      };
+	    view = new google.visualization.DataView(data);
+	    view.setColumns([1, 2, 3]);
 
-      chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    };
-    $(document).ready (function(){
-      $( window ).resize(function(){
-      chart.draw(data, options);
-      });
-    });
+	    control = new google.visualization.ControlWrapper({
+	        controlType: 'ChartRangeFilter',
+	        containerId: 'control',
+	        dataTable: data,
+	        options: {
+	            filterColumnIndex: 0,
+	            ui: {
+	                chartOptions: {
+	                    height: 50,
+	                    hAxis: {
+	                        format: 'MMM y'
+	                    }
+	                },
+	                chartView: {
+	                    columns: [0, {
+	                        type: 'number',
+	                        calc: function() {
+	                            return 0;
+	                        }
+	                    }]
+	                }
+	            }
+	        },
+	        state: {
+	            range: {
+	                start: new Date(2012, 10, 1),
+	                end: new Date(2014, 7, 1)
+	            }
+	        }
+	    });
 
+	    chart = new google.visualization.ChartWrapper({
+	        chartType: 'GeoChart',
+	        containerId: 'chart_div',
+	        options: {
+	            region: "{% autoescape off %}{{ locationCode }}{% endautoescape %}",
+		        displayMode: 'markers',
+				resolution: 'provinces',
+		        legend: 'none',
+		        colorAxis: {colors: ['#FFC7B2', '#FE6127'] },
+		        tooltip: {
+		            textStyle: {
+						color: '#5C5C5C',
+						fontName: 'Helvetica Neue',
+						fontSize: '14'
+					}
+				}
+			},
+	  	    height: 350,
+	  	    width: 600,
+	    });
+        	
+	    google.visualization.events.addListener(control, 'ready', function() {
+	        var state = control.getState();
+	        drawGeoChart(state.range.start, state.range.end);
+	    });
+    
+	    google.visualization.events.addListener(control, 'statechange', function(e) {
+	        var state = control.getState();
+	        drawGeoChart(state.range.start, state.range.end);
+	    });
+
+	    control.draw();
+
+	    function drawGeoChart (min, max) {
+	        var rows = data.getFilteredRows([{
+	            column: 0,
+	            minValue: min,
+	            maxValue: max
+	        }]);
+	        view.setRows(rows);
+	        var group = google.visualization.data.group(view, [0], [
+                {                	
+	                column: 1,
+	                type: 'number',
+	                aggregation: google.visualization.data.sum
+	            },
+				{                	
+	                column: 2,
+	                type: 'number',
+	                aggregation: google.visualization.data.sum
+	            }
+				]);
+	        chart.setDataTable(group);
+
+	        chart.draw();
+	    }
+	}
     </script>
   </head>
   <body>
     <div class="wrapper">
       <nav>
         <ul>
-        <li id="left">Download Density</li>
+        <li id="left">Decoy Download Density</li>
         <li id="right">
-          <form id="searchbox">
-          <input type="text" name="search" class="search" placeholder="Search by keyword">
+          <form action="/search" method="post" id="searchbox">
+            <input type="text" name="location" class="search" placeholder="Search by Region">
           </form>
         </li>
         </ul>
       </nav>
       <div id="chart_div"></div>
       <div class="push"></div>
-        <footer>
-          <div id="expand">
-            <a class="expander" href="#">
-            <h3 class="city">Ithaca, NY</h3>
-            </a>
-            <div class="content">
-            <p>Most popular file... <strong>4005 dl</strong></p>
-            <p>Next most popular... <strong>3980 dl</strong></p>
-            <p>Next one after that... <strong>3202 dl</strong></p>
-            <p>And so on and on... <strong>2820 dl</strong></p>
-            <p>Continues in order... <strong>2004 dl</strong></p>
-            <p class="link"><a href="#">View More</a></p>
-            </div>
-          </div>
-          <div id="slider">
-            <p>timeline goes here</p>
-          </div>
+        <footer id="dateSlider">
+          <div id="slider"></div>
+   		  <div id="control"></div>
         </footer>
     </div>
-    <script>
-    $('.expander').simpleexpand();
-    </script>
   </body>
 </html>
